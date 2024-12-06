@@ -1,0 +1,50 @@
+<div class="container">
+    <h3 mat-dialog-title *ngIf="flag == 1">Dodavanje hotela</h3>
+    <h3 mat-dialog-title *ngIf="flag == 2">Modifikacija hotela: {{data.id}}</h3>
+    <h3 mat-dialog-title *ngIf="flag == 3">Brisanje hotela: {{data.id}}</h3>
+    <form class="mat-dialog-content" #formControl="ngForm">
+  
+      <div class="form">
+        <mat-form-field>
+          <input matInput placeholder="Naziv" [(ngModel)]="data.naziv" name="naziv" [disabled]="flag == 3" required>
+        </mat-form-field>
+      </div>
+  
+      <div class="form">
+        <mat-form-field>
+          <input matInput placeholder ="Broj zvezdica" [(ngModel)]="data.brojZvezdica" name="brojZvezdica" [disabled]="flag == 3" required>
+        </mat-form-field>
+      </div>
+  
+      <div class="form">
+        <mat-form-field>
+          <textarea matInput placeholder="Opis" [(ngModel)]="data.opis" name="opis" [disabled]="flag == 3" required></textarea>
+        </mat-form-field>
+      </div>
+  
+      <div class="form">
+        <mat-form-field>
+          <mat-select [(ngModel)]="data.destinacija" placeholder="Destinacija" name="destinacija" [compareWith]="compareTo" [disabled]="flag == 3">
+            <mat-option *ngFor="let destinacija of destinacije" [value]="destinacija">
+              {{ destinacija.mesto }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+  
+      <div mat-dialog-actions>
+        <button mat-button *ngIf="flag == 1" type="submit" [mat-dialog-close]="1" (click)="add()" [disabled]="!formControl.valid">
+          Sačuvaj
+        </button>
+        <button mat-button *ngIf="flag == 2" type="submit" [mat-dialog-close]="1" (click)="update()" [disabled]="!formControl.valid">
+          Sačuvaj
+        </button>
+        <button mat-button *ngIf="flag == 3" type="submit" [mat-dialog-close]="1" (click)="delete()">
+          Obriši
+        </button>
+        <button mat-button (click)="cancel()">Poništi</button>
+      </div>
+  
+    </form>
+  </div>
+  
